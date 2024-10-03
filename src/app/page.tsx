@@ -1,101 +1,129 @@
-import Image from "next/image";
+"use client";
+
+import React from "react";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react"; // Import the hook
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  gsap.registerPlugin(useGSAP);
+  // Get gsap from useGSAP
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  // Page Load Animation with GSAP
+  useGSAP(() => {
+    const header = ".header";
+    const uploadBox = ".upload-box";
+    const uploadButton = ".upload-button";
+    const dragtext = ".dragtext";
+    const uploadtext = ".uploadtext";
+    const footer = ".footer";
+
+    gsap.from(header, {
+      opacity: 0,
+      y: -100,
+      duration: 1.5,
+      delay: 0.5,
+      ease: "power4.out",
+    });
+
+    gsap.from(uploadtext, {
+      opacity: 0,
+      y: 50,
+      duration: 1.5,
+      delay: 1.6,
+      ease: "power4.out",
+    });
+  
+    gsap.from(uploadBox, {
+      opacity: 0,
+      scale: 0.8,
+      duration: 1.5,
+      delay: 1.5,
+      ease: "power4.out",
+    });
+   
+    gsap.from(dragtext, {
+      opacity: 0,
+      y: 50,
+      duration: 1.5,
+      delay: 2,
+      ease: "power4.out",
+    });
+
+    
+    gsap.from(uploadButton, {
+      opacity: 0,
+      y: 50,
+      duration: 1.5,
+      delay: 2.5,
+      ease: "power4.out",
+    });
+
+   
+    gsap.from(footer, {
+      opacity: 0,
+      y: 50,
+      duration: 1,
+      delay: 3,
+      ease: "power4.out",
+    });
+  }); 
+
+ 
+  const hoverEffect = () => {
+    gsap.to(".upload-button", {
+      scale: 1.1,
+      duration: 0.3,
+      ease: "power1.out",
+    });
+  };
+
+  const hoverEffectReset = () => {
+    gsap.to(".upload-button", {
+      scale: 1,
+      duration: 0.3,
+      ease: "power1.in",
+    });
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-r px-4 lg:px-0 from-blue-600 via-purple-600 to-pink-600 flex flex-col justify-center items-center text-white">
+      {/* Header Section */}
+      <header className="header text-center mb-16">
+        <h1 className="text-5xl font-extrabold leading-tight">
+          Effortlessly Upload Your Images
+        </h1>
+        <p className="mt-4 text-lg text-gray-300">
+          A simple and fast image upload experience, powered by Cloudinary.
+        </p>
+      </header>
+
+      {/* Upload Box */}
+      <div className="upload-box w-full max-w-xl bg-white bg-opacity-10 p-8 rounded-xl shadow-lg backdrop-blur-lg">
+        <h2 className="text-3xl uploadtext font-semibold text-gray-200 mb-8 text-center">
+          Upload Your Images
+        </h2>
+
+        {/* Upload Section */}
+        <div className="flex justify-center items-center">
+          <div className="bg-white border-dashed border-2 p-12 rounded-xl text-center w-full max-w-md">
+            <p className="text-gray-400 text-lg mb-6 dragtext">
+              Drag & Drop or Click to Upload
+            </p>
+            <button
+              onMouseEnter={hoverEffect}
+              onMouseLeave={hoverEffectReset}
+              className="upload-button bg-indigo-600 text-white px-6 py-2 rounded-full text-lg hover:bg-indigo-700"
+            >
+              Upload Image
+            </button>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+
+        {/* Explore More Link */}
+        <div className="text-center mt-6 footer">
+          <p>Built by Emmanuel Olaniyi</p>
+        </div>
+      </div>
     </div>
   );
 }
