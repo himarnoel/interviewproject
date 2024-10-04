@@ -3,6 +3,8 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import Link from "next/link";
+import { openModal } from "@/lib/slices/modalSlice";
+import { useAppDispatch } from "@/lib/hooks";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -13,6 +15,7 @@ const CalltoAction = (props: Props) => {
   const headingRef = useRef<HTMLHeadingElement>(null);
   const paragraphRef = useRef<HTMLParagraphElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
+  const dispatch = useAppDispatch();
 
   useGSAP(() => {
     const timeline = gsap.timeline({
@@ -54,19 +57,29 @@ const CalltoAction = (props: Props) => {
   }, []);
 
   return (
-    <section ref={sectionRef} className="py-16 rounded-xl bg-gray-200 w-full text-center mt-20">
+    <section
+      ref={sectionRef}
+      className="py-16 rounded-xl bg-gray-200 w-full text-center mt-20"
+    >
       <h2 ref={headingRef} className="text-2xl md:text-4xl font-bold">
         Start Uploading Now!
       </h2>
       <p ref={paragraphRef} className="mt-4 text-lg text-gray-600">
-        Experience the simplicity of managing your images with our cloud-based solution.
+        Experience the simplicity of managing your images with our cloud-based
+        solution.
       </p>
-      <Link href={"/upload"}><button
-        ref={buttonRef}
-        className="mt-6 px-8 py-3 bg-black text-white rounded-lg font-semibold hover:bg-gray-800 transition-colors duration-300"
+      <Link
+        href="/home"
+        onClick={() => {
+          dispatch(openModal());
+        }}
       >
-        Upload Your Images
-      </button>
+        <button
+          ref={buttonRef}
+          className="mt-6 px-8 py-3 bg-black text-white rounded-lg font-semibold hover:bg-gray-800 transition-colors duration-300"
+        >
+          Upload Your Images
+        </button>
       </Link>
     </section>
   );

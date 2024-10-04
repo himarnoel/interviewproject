@@ -15,12 +15,11 @@ export default function ImageGallery() {
   const dispatch = useAppDispatch();
   const { images, searchQuery } = useAppSelector((state) => state.uploadedImages);
 
-  // Filter images based on search query
+  
   const filteredImages = images.filter((image) =>
     image.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  // Handle image download
   const handleDownload = async (url: string, name: string) => {
     try {
       const response = await fetch(url, { mode: "cors" });
@@ -61,14 +60,13 @@ export default function ImageGallery() {
         </div>
       )}
 
-      {/* No matching results after search */}
+      
       {images.length > 0 && filteredImages.length === 0 && (
         <div className="text-center mt-10">
           <p className="text-gray-500">No matching results for "{searchQuery}".</p>
         </div>
       )}
 
-      {/* Display image gallery */}
       {filteredImages.length > 0 && (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 items-center justify-items-start gap-6">
           {filteredImages.slice().reverse().map((image, index) => (
@@ -83,7 +81,7 @@ export default function ImageGallery() {
                 />
               </div>
 
-              {/* Icons for Download and Share */}
+             
               <div className="absolute inset-0 bg-black bg-opacity-50 flex justify-center items-center space-x-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                 <button
                   onClick={() => handleDownload(image.url, image.name)}
