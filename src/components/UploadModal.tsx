@@ -8,6 +8,7 @@ import { closeModal } from "@/lib/slices/modalSlice";
 import { gsap } from "gsap";
 import { ClipLoader } from "react-spinners";
 import { toast } from "react-toastify";
+import Image from "next/image";
 
 interface UploadModalProps {
   onUploadSuccess: (url: string, name: string) => void; // Function to handle successful upload
@@ -19,13 +20,18 @@ const UploadModal: React.FC<UploadModalProps> = ({ onUploadSuccess }) => {
   const [dragging, setDragging] = useState(false);
   const count = useAppSelector((state) => state.modal);
 
-  // Handle file selection via input or drag-and-drop
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      setFile(e.target.files[0]);
+    const selectedFile = e.target.files ? e.target.files[0] : null;
+  
+  
+    if (selectedFile && selectedFile.type.startsWith("image/")) {
+      setFile(selectedFile);
+    } else {
+      toast.error("Please select a valid image file.");
     }
   };
-
+  
   // Drag and drop file handler
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault();
@@ -39,8 +45,12 @@ const UploadModal: React.FC<UploadModalProps> = ({ onUploadSuccess }) => {
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault();
     setDragging(false);
-    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-      setFile(e.dataTransfer.files[0]);
+
+    const droppedFile = e.dataTransfer.files[0];
+    if (droppedFile && droppedFile.type.startsWith("image/")) {
+      setFile(droppedFile);
+    } else {
+      toast.error("Please drop a valid image file.");
     }
   };
 
@@ -62,11 +72,11 @@ const UploadModal: React.FC<UploadModalProps> = ({ onUploadSuccess }) => {
         const data = res.data;
         if (data.url) {
           onUploadSuccess(data.url, file.name);
-          toast.success("Uploaded Sucessfully!")
+          toast.success("Uploaded Sucessfully!");
         }
       } catch (error) {
         console.error("Upload failed", error);
-        toast.success("Upload Failed!")
+        toast.success("Upload Failed!");
       } finally {
         setUploading(false);
         setFile(null);
@@ -154,6 +164,7 @@ const UploadModal: React.FC<UploadModalProps> = ({ onUploadSuccess }) => {
                   <input
                     type="file"
                     className="hidden"
+                     accept="image/*"
                     onChange={handleFileChange}
                   />
                 </label>
@@ -161,7 +172,9 @@ const UploadModal: React.FC<UploadModalProps> = ({ onUploadSuccess }) => {
             </>
           ) : (
             <>
-              <img
+              <Image
+                width={300}
+                height={200}
                 src={URL.createObjectURL(file)}
                 alt="Selected"
                 className="w-64 object-contain mb-4 border border-black rounded-md"

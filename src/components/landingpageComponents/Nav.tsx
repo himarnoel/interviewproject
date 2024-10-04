@@ -33,11 +33,13 @@ const Nav = (props: Props) => {
           ref={navRef}
           className="flex header w-full max-w-[600px] rounded-full bg-[hsla(0,0%,93%,0.72)] backdrop-blur-xl fixed left-1/2 top-4  -translate-x-1/2 items-center justify-between gap-x-24 px-6 py-[0.8rem] z-[100]"
         >
-          <Image
-            src={logo}
-            alt="logo"
-            className=" w-[6rem] lg:w-[10rem] object-contain"
-          />
+          <Link href="/">
+            <Image
+              src={logo}
+              alt="logo"
+              className=" w-[6rem] lg:w-[10rem] object-contain"
+            />
+          </Link>
           <div className="flex items-center gap-4">
             <Link
               href="/home"

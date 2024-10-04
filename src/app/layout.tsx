@@ -5,6 +5,7 @@ import "./globals.css";
 import StoreProvider from "./StoreProvider";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import NextTopLoader from "nextjs-toploader";
 const manrope = Manrope({
   weight: "400",
   subsets: ["cyrillic"],
@@ -24,6 +25,17 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={manrope.className}>
+        <NextTopLoader
+          color="#000000"
+          initialPosition={0.08}
+          crawlSpeed={200}
+          height={3}
+          crawl={true}
+          showSpinner={false}
+          easing="ease"
+          speed={200}
+          shadow="0 0 10px #000000,0 0 5px #000000"
+        />
         <ToastContainer
           position="top-center"
           autoClose={5000}
