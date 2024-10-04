@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { useState } from 'react';
 import axios from 'axios';
@@ -22,9 +22,9 @@ export default function UploadForm({ onUploadSuccess }: { onUploadSuccess: (url:
       try {
         setUploading(true);
 
-        // Using axios to upload the image
-        const res = await axios.post('/api/cloudinary', 
-          { image: reader.result }, 
+        // Upload the image to the server
+        const res = await axios.post('/api/cloudinary',
+          { image: reader.result },
           { headers: { 'Content-Type': 'application/json' } }
         );
 
@@ -41,15 +41,29 @@ export default function UploadForm({ onUploadSuccess }: { onUploadSuccess: (url:
   };
 
   return (
-    <div className="upload-form mt-6">
-      <input type="file" onChange={handleFileChange} className="mb-4" />
-      <button
-        onClick={handleUpload}
-        disabled={uploading || !file}
-        className="bg-indigo-600 text-white px-6 py-2 rounded-lg"
-      >
-        {uploading ? 'Uploading...' : 'Upload Image'}
-      </button>
+    <div className="upload-form mt-10 p-8 bg-white shadow-md rounded-lg w-full max-w-md mx-auto">
+      <h2 className="text-2xl font-bold mb-6 text-black text-center">Upload Your Image</h2>
+      <div className="flex flex-col items-center">
+        <input
+          type="file"
+          onChange={handleFileChange}
+          className="mb-6 text-sm text-gray-500
+          file:mr-4 file:py-2 file:px-4
+          file:rounded-lg file:border-0
+          file:text-sm file:font-semibold
+          file:bg-black file:text-white
+          hover:file:bg-gray-700"
+        />
+        <button
+          onClick={handleUpload}
+          disabled={uploading || !file}
+          className={`w-full py-3 text-center rounded-lg font-semibold transition duration-200 ease-in-out
+            ${uploading || !file ? 'bg-gray-400 text-gray-300' : 'bg-black text-white hover:bg-gray-800'}
+          `}
+        >
+          {uploading ? 'Uploading...' : 'Upload Image'}
+        </button>
+      </div>
     </div>
   );
 }
