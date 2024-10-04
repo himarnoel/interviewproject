@@ -173,11 +173,11 @@ const UploadModal: React.FC<UploadModalProps> = ({ onUploadSuccess }) => {
           ) : (
             <>
               <Image
-                width={300}
-                height={200}
+                width={100}
+                height={100}
                 src={URL.createObjectURL(file)}
                 alt="Selected"
-                className="w-64 object-contain mb-4 border border-black rounded-md"
+                className="w-20 object-contain mb-4 border border-black rounded-md"
               />
               <p className="text-sm text-gray-600">{file.name}</p>
               {!uploading && (
