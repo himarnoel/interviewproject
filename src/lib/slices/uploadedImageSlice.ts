@@ -9,11 +9,14 @@ type Image = {
 
 export interface ImageState {
   images: Array<Image>;
-  searchQuery: string; 
+  searchQuery: string;
 }
 
 const initialState: ImageState = {
-  images: JSON.parse(localStorage.getItem("uploadedImages") || "[]"),
+  images: JSON.parse(
+    (typeof window !== "undefined" && localStorage.getItem("uploadedImages")) ||
+      "[]"
+  ),
   searchQuery: "",
 };
 
@@ -23,10 +26,12 @@ export const UploadedImageSlice = createSlice({
   reducers: {
     updateImagesState: (state, action: PayloadAction<Image>) => {
       const updatedImages = [...state.images, action.payload];
-      localStorage.setItem("uploadedImages", JSON.stringify(updatedImages));
+      if (typeof window !== "undefined") {
+        localStorage.setItem("uploadedImages", JSON.stringify(updatedImages));
+      }
       state.images = updatedImages;
     },
-    setSearchQuery: (state, action: PayloadAction<string>) => { 
+    setSearchQuery: (state, action: PayloadAction<string>) => {
       state.searchQuery = action.payload;
     },
   },
