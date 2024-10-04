@@ -76,7 +76,7 @@ const UploadModal: React.FC<UploadModalProps> = ({ onUploadSuccess }) => {
         }
       } catch (error) {
         console.error("Upload failed", error);
-        toast.success("Upload Failed!");
+        toast.error("Upload Failed!");
       } finally {
         setUploading(false);
         setFile(null);
