@@ -10,7 +10,7 @@ cloudinary.config({
 
 
 
-
+console.log("process.env.CLOUDINARY_CLOUD_NAME",process.env.CLOUDINARY_CLOUD_NAME)
 export async function POST(req: NextRequest) {
   const { image } = await req.json();
 
@@ -19,6 +19,7 @@ export async function POST(req: NextRequest) {
   }
 
   try {
+
     const uploadResponse = await cloudinary.uploader.upload(image, {
       upload_preset: 'workingclass',
     });
