@@ -10,13 +10,13 @@ cloudinary.config({
 
 
 
-console.log("process.env.CLOUDINARY_CLOUD_NAME",process.env.CLOUDINARY_CLOUD_NAME)
 export async function POST(req: NextRequest) {
   const { image } = await req.json();
-
+  
   if (!image) {
     return NextResponse.json({ error: 'No image provided' }, { status: 400 });
   }
+  console.log("process.env.CLOUDINARY_CLOUD_NAME",process.env.CLOUDINARY_CLOUD_NAME)
 
   try {
 
