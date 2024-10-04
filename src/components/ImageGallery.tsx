@@ -1,5 +1,7 @@
 "use client";
 
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+import { updateImagesState } from "@/lib/slices/uploadedImageSlice";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { FiDownload, FiShare2 } from "react-icons/fi"; // Importing icons
@@ -11,14 +13,8 @@ type Image = {
 };
 
 export default function ImageGallery() {
-  const [images, setImages] = useState<Image[]>([]);
+  const {images } = useAppSelector((state) => state.uploadedImages);
 
-  useEffect(() => {
-    const storedImages = JSON.parse(
-      localStorage.getItem("uploadedImages") || "[]"
-    );
-    setImages(storedImages);
-  }, []);
 
   const handleDownload = async (url: string, name: string) => {
     try {
@@ -46,8 +42,8 @@ export default function ImageGallery() {
   };
 
   return (
-    <div className="image-gallery grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 items-center justify-items-start gap-6 mt-8">
-      {images.map((image, index) => (
+    <div className="image-gallery mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 items-center justify-items-start gap-6 ">
+      {images.slice().reverse().map((image, index) => (
         <div key={index} className="image-card relative group rounded-lg overflow-hidden">
           <div className="relative ">
             <img

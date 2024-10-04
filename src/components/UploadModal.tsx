@@ -4,7 +4,7 @@ import { AiOutlineClose, AiOutlineDelete } from "react-icons/ai";
 import { RiUploadCloud2Line } from "react-icons/ri";
 import axios from "axios";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-import { closeModal } from "@/lib/slice";
+import { closeModal } from "@/lib/slices/modalSlice";
 import { gsap } from "gsap";
 import { ClipLoader } from "react-spinners";
 

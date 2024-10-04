@@ -3,8 +3,8 @@
 import ImageGallery from "@/components/ImageGallery";
 import UploadModal from "@/components/UploadModal";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-import { openModal } from "@/lib/slice";
-// import UploadForm from "@/components/UploadForm"; // Corrected typo in the import path
+import { openModal } from "@/lib/slices/modalSlice";
+import { updateImagesState } from "@/lib/slices/uploadedImageSlice";
 import { useEffect, useState } from "react";
 
 export default function Home() {
@@ -12,28 +12,18 @@ export default function Home() {
   const [searchQuery, setSearchQuery] = useState("");
   const [uploadedImages, setUploadedImages] = useState<any[]>([]);
 
-  useEffect(() => {
-    const storedImages = JSON.parse(
-      localStorage.getItem("uploadedImages") || "[]"
-    );
-    setUploadedImages(storedImages);
-  }, [uploadedImages]);
-
   const handleUploadSuccess = (imageUrl: string, imageName: string) => {
     const newImage = {
       url: imageUrl,
       name: imageName,
-      description: imageDescription,
       date: new Date().toLocaleString(),
     };
 
-    const updatedImages = [...uploadedImages, newImage];
-    setUploadedImages(updatedImages);
-    localStorage.setItem("uploadedImages", JSON.stringify(updatedImages));
-    setImageDescription("");
+    dispatch(updateImagesState(newImage));
   };
 
   const { isModal } = useAppSelector((state) => state.modal);
+
   const dispatch = useAppDispatch();
   return (
     <div className="container mx-auto py-10 px-4">
