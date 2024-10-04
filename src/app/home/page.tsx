@@ -30,7 +30,7 @@ export default function Home() {
 
   return (
     <div className="container mx-auto py-10 px-4">
-      <header className="fixed top-0 left-0 right-0 bg-white z-10 shadow p-4 flex justify-between items-center">
+      <header className="fixed top-0 left-0 right-0 bg-white z-10 shadow p-4 flex flex-col lg:flex-row justify-between items-center">
         <Link href="/" className="inline-block">
           <Image
             src={logo}
@@ -39,7 +39,7 @@ export default function Home() {
           />
         </Link>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-4 mt-4 lg:mt-0">
           {/* Search Section */}
           <div className="flex gap-4 p-1 py-2 w-full max-w-[400px] border px-2 items-center border-gray-300 rounded-xl">
             <FiSearch className="text-gray-500 text-2xl" />

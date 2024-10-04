@@ -45,7 +45,7 @@ export default function ImageGallery() {
   };
 
   return (
-    <div className="image-gallery mt-10">
+    <div className="image-gallery mt-6 lg:mt-10">
       {/* Empty State - No Images Available */}
       {images.length === 0 && (
         <div className="text-center mt-10 flex items-center flex-col justify-center">
@@ -68,7 +68,7 @@ export default function ImageGallery() {
       )}
 
       {filteredImages.length > 0 && (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 items-center justify-items-start gap-6">
+        <div className=" flex flex-wrap justify-center sm:grid  sm:grid-cols-2 lg:grid-cols-3 items-center justify-items-center gap-8 sm:gap-6">
           {filteredImages.slice().reverse().map((image, index) => (
             <div key={index} className="image-card relative group rounded-lg overflow-hidden">
               <div className="relative">
