@@ -7,6 +7,7 @@ import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { closeModal } from "@/lib/slices/modalSlice";
 import { gsap } from "gsap";
 import { ClipLoader } from "react-spinners";
+import { toast } from "react-toastify";
 
 interface UploadModalProps {
   onUploadSuccess: (url: string, name: string) => void; // Function to handle successful upload
@@ -61,9 +62,11 @@ const UploadModal: React.FC<UploadModalProps> = ({ onUploadSuccess }) => {
         const data = res.data;
         if (data.url) {
           onUploadSuccess(data.url, file.name);
+          toast.success("Uploaded Sucessfully!")
         }
       } catch (error) {
         console.error("Upload failed", error);
+        toast.success("Upload Failed!")
       } finally {
         setUploading(false);
         setFile(null);
@@ -106,9 +109,13 @@ const UploadModal: React.FC<UploadModalProps> = ({ onUploadSuccess }) => {
   };
   const dispatch = useAppDispatch();
   return (
-    <div className="fixed inset-0 bg-opacity-45 backdrop-blur-md bg-black flex items-center justify-center z-50">
+    <div
+      onClick={handleClose}
+      className="fixed inset-0 lg:px-0 px-4 bg-opacity-45 backdrop-blur-md bg-black flex items-center justify-center z-50"
+    >
       <div
         ref={modalRef}
+        onClick={(e) => e.stopPropagation()}
         className="max-w-[550px] w-full py-8 bg-white rounded-[16px] shadow-lg px-8"
       >
         {/* Modal Header */}

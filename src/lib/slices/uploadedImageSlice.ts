@@ -6,26 +6,32 @@ type Image = {
   name: string;
   date: string;
 };
+
 export interface ImageState {
   images: Array<Image>;
+  searchQuery: string; 
 }
 
 const initialState: ImageState = {
   images: JSON.parse(localStorage.getItem("uploadedImages") || "[]"),
+  searchQuery: "",
 };
 
 export const UploadedImageSlice = createSlice({
-  name: "modal",
+  name: "uploadedImageSlice",
   initialState,
   reducers: {
     updateImagesState: (state, action: PayloadAction<Image>) => {
       const updatedImages = [...state.images, action.payload];
-       localStorage.setItem("uploadedImages", JSON.stringify(updatedImages));
+      localStorage.setItem("uploadedImages", JSON.stringify(updatedImages));
       state.images = updatedImages;
+    },
+    setSearchQuery: (state, action: PayloadAction<string>) => { 
+      state.searchQuery = action.payload;
     },
   },
 });
 
-export const { updateImagesState } = UploadedImageSlice.actions;
+export const { updateImagesState, setSearchQuery } = UploadedImageSlice.actions;
 
 export default UploadedImageSlice.reducer;

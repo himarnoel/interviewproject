@@ -8,6 +8,8 @@ import logo3 from "../../images/kfc2.png";
 import logo4 from "../../images/img1.webp";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Link from "next/link";
+import { useAppDispatch } from "@/lib/hooks";
+import { openModal } from "@/lib/slices/modalSlice";
 
 type Props = {};
 
@@ -21,6 +23,8 @@ const Hero = (props: Props) => {
   const logoRef2 = useRef<HTMLImageElement | null>(null);
   const logoRef3 = useRef<HTMLImageElement | null>(null);
   const imageRef = useRef(null);
+
+  const dispatch = useAppDispatch();
 
   useGSAP(() => {
     // GSAP Animations
@@ -90,7 +94,12 @@ const Hero = (props: Props) => {
         </p>
 
         {/* Animated Button */}
-        <Link href={"/upload"}>
+        <Link
+          href={"/home"}
+          onClick={() => {
+            dispatch(openModal());
+          }}
+        >
           <button
             className="mt-10 px-6 py-3 herotextbtn bg-black text-white rounded-full font-semibold"
             ref={heroButtonRef}
